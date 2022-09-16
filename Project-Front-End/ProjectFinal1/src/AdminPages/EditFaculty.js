@@ -7,7 +7,7 @@ import axios from 'axios';
 function EditFaculty() {
   const navigate = useNavigate();
   const param = useParams();
-
+  const facultyId=param.id;
   const updateurl=`http://localhost:8080/admin/editfaculty/${param.id}`;
   const editURL = `http://localhost:8080/admin/editfaculty/${param.id}`;
 
@@ -62,6 +62,7 @@ function EditFaculty() {
          }).then(res=>
              console.log(res.data)
             )
+            alert("Faculty With Id "+facultyId+" Updated Suucesfully")
             navigate("/admin/viewfaculty")
     }
     

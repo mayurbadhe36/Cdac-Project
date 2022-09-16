@@ -25,8 +25,10 @@ function AdminViewFaculty() {
 
  const removeFaculty =(id) => {
   axios.delete(`http://localhost:8080/admin/viewfaculty/delete/${id}`).then((response) => {
-    alert("Faculty record " + id + " deleted!");
+    
+  alert("Faculty record " + id + " deleted!");
     //setEmployeeData();
+    navigate('/admin/viewfaculty')
     navigate('/admin/viewfaculty')
 
   }).catch(error => {

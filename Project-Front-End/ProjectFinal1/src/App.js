@@ -27,6 +27,8 @@ import AdminViewFaculty from './AdminPages/AdminViewFaculty';
 import AdminViewStudent from './AdminPages/AdminViewStudent';
 import Admin from './AdminPages/Admin';
 import AddFaculty1 from './AdminPages/AddFaculty1';
+import EditNoticeBoard from './FacultyPages/EditNoticeBoard';
+import EditTimeTable from './FacultyPages/EditTimeTable';
 
 function App() {
 return (
@@ -47,7 +49,7 @@ return (
 <Route exact path="/student/assignment" element={<Assignment/>}/>
 
 <Route exact path="/faculty" element={<Faculty/>}/>
-<Route  path="/faculty/addtimetable/" element={<AddTimeTable/>}/>
+<Route exact path="/faculty/addtimetable/" element={<AddTimeTable/>}/>
 <Route exact path="/faculty/viewtimetable" element={<ViewTimeTable/>}/>
 <Route exact path="/faculty/addnoticeboard" element={<AddNoticeBoard/>}/>
 <Route exact path="/faculty/viewnoticeboard" element={<ViewNoticeBoard/>}/>
@@ -55,6 +57,8 @@ return (
 <Route exact path="/faculty/uploadAssignment" element={<UploadAssignment/>}/>
 <Route exact path="/faculty/viewassignment" element={<ViewAssignment/>}/>
 <Route exact path="/faculty/viewassignmentanswer" element={<AssignmentAnswer/>}/>
+<Route  path="/faculty/editnoticeboard/:id" element={<EditNoticeBoard/>}/>
+<Route  path="/faculty/edittimetable/:id" element={<EditTimeTable/>}/>
 
 <Route exact path="/admin" element={<Admin/>}/>
 <Route exact path="/admin/addfaculty" element={<AddFaculty1/>}/>

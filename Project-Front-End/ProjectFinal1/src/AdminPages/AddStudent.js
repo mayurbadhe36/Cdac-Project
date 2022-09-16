@@ -26,6 +26,7 @@ function AddStudent() {
         }).then(res=>
             console.log(res.data)
             )
+            alert("Student Added Successfully!!")
             navigate('/admin')
     }
     

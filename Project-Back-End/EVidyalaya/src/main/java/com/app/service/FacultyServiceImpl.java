@@ -97,17 +97,17 @@ public class FacultyServiceImpl implements IFacultyService {
 //	public NoticeBoard updateNoticeboard(NoticeBoard notice) {
 //		return noticeRepo.save(notice);
 //	}
-//
+
 //	@Override
-//	public boolean deleteNotice(long id) {
+//public boolean deleteNotice(long id) {
 //		NoticeBoard n = noticeRepo.findById(id).get();
-//		if (n != null) {
+//	if (n != null) {
 //			noticeRepo.delete(n);
 //			return true;
-//		}
+//	}
 //		return false;
 //	}
-//
+
 //	@Override
 //	public Assignment getAssignmentById(long id) {
 //		return assignRepo.findById(id).get();
@@ -214,6 +214,66 @@ public class FacultyServiceImpl implements IFacultyService {
 				.orElseThrow(() -> new ResourceNotFoundException("Invalid Faculty ID !!!!!!!"));
 		timetable.setFaculty(u);
 		return timetableRepo.save(timetable);
+	}
+
+	@Override
+	public String deleteNoticeBoardById(Long id) {
+		NoticeBoard notice = noticeRepo.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Invalid NoticeBoard ID !!!!!!!"));
+		noticeRepo.delete(notice);
+
+		return "Noticeboard Deleted Succesfully ";
+	}
+
+	@Override
+	public NoticeBoard getNoticeBoardById(Long id) {
+		NoticeBoard notice = noticeRepo.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Invalid NoticeBoard ID !!!!!!!"));
+		return notice;
+	}
+
+	@Override
+	public NoticeBoard updateNoticeBoardDetails(NoticeBoard detachedNoticeBoard, Long id) {
+		NoticeBoard notice = noticeRepo.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Invalid NoticeBoard ID !!!!!!!"));
+		notice.setModuleName(detachedNoticeBoard.getModuleName());
+		notice.setDate(detachedNoticeBoard.getDate());
+		notice.setDescription(detachedNoticeBoard.getDescription());
+		noticeRepo.save(notice);
+		return notice;
+	}
+
+	@Override
+	public String deleteTimeTableById(Long id) {
+
+		TimeTable timetable = timetableRepo.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Invalid TimeTable ID !!!!!!!"));
+		timetableRepo.delete(timetable);
+		return "TimeTable Deleted Succesfully ";
+	}
+
+	@Override
+	public TimeTable getTimeTableById(Long id) {
+		TimeTable timetable = timetableRepo.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Invalid TimeTable ID !!!!!!!"));
+		return timetable;
+	}
+
+	@Override
+	public TimeTable updateTimeTableDetails(TimeTable detachedTimeTable, Long id) {
+
+		TimeTable timetable = timetableRepo.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Invalid TimeTable ID !!!!!!!"));
+
+		timetable.setModuleName(detachedTimeTable.getModuleName());
+		timetable.setDate(detachedTimeTable.getDate());
+		timetable.setStartTime(detachedTimeTable.getStartTime());
+		timetable.setEndTime(detachedTimeTable.getEndTime());
+		timetable.setPlatform(detachedTimeTable.getPlatform());
+		timetable.setLink(detachedTimeTable.getLink());
+		timetableRepo.save(timetable);
+		return timetable;
+
 	}
 
 }

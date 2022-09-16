@@ -35,17 +35,15 @@ function ViewAssignment() {
                  <thead className='table-dark'>
                    <tr>
                 <th>Sr No.</th>
-                <th>Fuculty Name</th>
                 <th>Module Name</th>
                 <th>Description</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
-         {data.assignments.map(({id,facultyName,moduleName,description})=>
+         {data.assignments.map(({id,moduleName,description})=>
          <tr>
           <td>{id}</td>
-          <td>{facultyName}</td>
           <td>{moduleName}</td>
           <td>{description}</td>
           <td>

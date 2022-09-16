@@ -25,10 +25,10 @@ function AdminViewStudent() {
 
  const removeStudent=(id) => {
   axios.delete(`http://localhost:8080/admin/viewstudent/delete/${id}`).then((response) => {
-    alert("Student record with Id " + id + " deleted!");
-    
+   
+  alert("Student record with Id " + id + " deleted!");
     navigate('/admin/viewstudent')
-
+    navigate('/admin/viewstudent')
   }).catch(error => {
     alert("Error Ocurred in remove Student :" + error);
   });

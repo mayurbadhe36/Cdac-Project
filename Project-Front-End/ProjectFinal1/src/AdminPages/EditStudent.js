@@ -7,7 +7,7 @@ import axios from 'axios';
 function EditStudent() {
   const navigate = useNavigate();
   const param = useParams();
-
+  const studentId=param.id;
   const updateurl=`http://localhost:8080/admin/editstudent/${param.id}`;
   const editUrl = `http://localhost:8080/admin/editstudent/${param.id}`;
 
@@ -61,6 +61,7 @@ function EditStudent() {
      }).then(res=>
          console.log(res.data)
         )
+        alert("Student With Id "+studentId+"Updated Succesfully!!!")
         navigate("/admin/viewstudent")
 }
   return (

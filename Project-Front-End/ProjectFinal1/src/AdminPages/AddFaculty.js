@@ -9,11 +9,11 @@ function AddFaculty() {
     const [email, setEmail] = useState('')
     const[address,setAddress]=useState('')
     const [password, setPassword] = useState('')
-
+    
     const handleFacultyName = (e) => {
-
         setFacultyName(e.target.value)
     }
+
     const handleDob = (e) => {
         setDob(e.target.value)
     }

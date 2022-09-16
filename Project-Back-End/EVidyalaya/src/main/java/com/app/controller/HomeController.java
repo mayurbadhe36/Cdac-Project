@@ -30,7 +30,7 @@ public class HomeController {
 		User u = loginService.authenticateUser(cred.getEmail(), cred.getPassword());
 		HashMap<String, Object> ht = new HashMap<String, Object>();
 		if (u == null)
-			return new ResponseEntity<>(new ApiResponse("Invalid Emp ID !!!!!!!!!!!!!!!!"), HttpStatus.NOT_FOUND);// =>
+			return new ResponseEntity<>(new ApiResponse("Invalid Credential  !!!!!!!!!!!!!!!!"), HttpStatus.NOT_FOUND);// =>
 		ht.put("status", new String("success"));
 		ht.put("data", u);
 		return ResponseEntity.ok(ht);

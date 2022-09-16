@@ -10,7 +10,6 @@ function AddTimeTable() {
   const[data,setData]=useState({
       facultyName:"",
       date:"",
-      description:"",
       startTime:"",
       endTime:"",
       moduleName:"",
@@ -22,7 +21,6 @@ function AddTimeTable() {
       axios.post(url,{
           facultyName:sessionStorage.getItem("userName"),
           date: data.date,
-          description:data.description,
           startTime:data.startTime,
           endTime:data.endTime,
           moduleName:data.moduleName,
@@ -31,6 +29,8 @@ function AddTimeTable() {
       }).then(res=>
           console.log(res.data)
           )  
+          alert("TimeTable Added Successfully!!")
+          navigate('/faculty')
           navigate('/faculty')
   }
   function handle(e){
@@ -57,10 +57,10 @@ function AddTimeTable() {
              <label>Date</label>
              <input type ='date' className='form-control' placeholder='Enter date' onChange={(e)=>handle(e)} id='date' value={data.value}></input>
            </div>
-           <div className='mb-3'>
+           {/* <div className='mb-3'>
              <label>Description</label><br></br>
              <textarea className='col-100  form-control' onChange={(e)=>handle(e)} id='description' value={data.value}> </textarea>
-           </div>
+           </div> */}
            <div className='mb-3'>
               <label>Start Time: </label>
               <input type='time' className='col-3' onChange={(e)=>handle(e)} id='startTime' value={data.value}></input>

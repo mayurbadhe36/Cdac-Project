@@ -26,6 +26,7 @@ function AddFaculty1() {
         }).then(res=>
             console.log(res.data)
             )  
+            alert("Faculty Added Successfully!!")
             navigate('/admin')
            
     }

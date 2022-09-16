@@ -1,6 +1,7 @@
 package com.app.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -13,9 +14,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,9 +44,9 @@ public class FacultyController {
 	IFacultyService facultyService;
 
 	@PostMapping("/addnoticeboard/{userId}")
-	public ResponseEntity<?> addNoticeBoard(@RequestBody @Valid NoticeBoard noticeboard, @PathVariable Long facultyId) {
+	public ResponseEntity<?> addNoticeBoard(@RequestBody @Valid NoticeBoard noticeboard, @PathVariable Long userId) {
 		try {
-			return new ResponseEntity<>(facultyService.addNoticeBoard(noticeboard, facultyId), HttpStatus.CREATED);
+			return new ResponseEntity<>(facultyService.addNoticeBoard(noticeboard, userId), HttpStatus.CREATED);
 		} catch (RuntimeException e) {
 			return new ResponseEntity<>(new ApiResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
 		}
@@ -130,4 +133,75 @@ public class FacultyController {
 			return new ResponseEntity<>(new ApiResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
 		}
 	}
+
+	@DeleteMapping("/viewnoticeboard/delete/{id}")
+	public ResponseEntity<?> deleteFacultyDetails(@PathVariable Long id) {
+		System.out.println("in del Faculty" + id);
+		try {
+			return ResponseEntity.ok(new ApiResponse(facultyService.deleteNoticeBoardById(id)));
+		} catch (RuntimeException e) {
+			System.out.println("err in del  Faculty " + e);
+			return new ResponseEntity<>(new ApiResponse("Invalid NoticeBoard ID !!!!!!!!!!!!!!!!"),
+					HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@GetMapping("/editnoticeboard/{id}")
+	public ResponseEntity<?> getNoticeBoardByNoticeBoardId(@PathVariable Long id) {
+		NoticeBoard u = facultyService.getNoticeBoardById(id);
+		HashMap<String, Object> ht = new HashMap<String, Object>();
+		if (u == null)
+			return new ResponseEntity<>(new ApiResponse("Invalid NoticeBoard ID !!!!!!!!!!!!!!!!"),
+					HttpStatus.NOT_FOUND);
+		ht.put("status", new String("success"));
+		ht.put("data", u);
+		return ResponseEntity.ok(ht);
+	}
+
+	@PutMapping("/editnoticeboard/{id}")
+	public ResponseEntity<?> updateStudentDetails(@RequestBody NoticeBoard detachedNoticeBoard, @PathVariable Long id) {
+
+		System.out.println("in update NoticeBoard" + detachedNoticeBoard.getId());
+		try {
+			return ResponseEntity.ok(facultyService.updateNoticeBoardDetails(detachedNoticeBoard, id));
+		} catch (RuntimeException e) {
+			System.out.println("err in update  NoticeBoard " + e);
+			return new ResponseEntity<>(new ApiResponse(e.getMessage()), HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@DeleteMapping("/viewtimetable/delete/{id}")
+	public ResponseEntity<?> deleteTimeTableDetails(@PathVariable Long id) {
+		System.out.println("in del TimeTable" + id);
+		try {
+			return ResponseEntity.ok(new ApiResponse(facultyService.deleteTimeTableById(id)));
+		} catch (RuntimeException e) {
+			System.out.println("err in del  Timetable " + e);
+			return new ResponseEntity<>(new ApiResponse("Invalid Timetable ID !!!!!!!!!!!!!!!!"), HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@GetMapping("/edittimetable/{id}")
+	public ResponseEntity<?> getTimeTableByTimeTableId(@PathVariable Long id) {
+		TimeTable t = facultyService.getTimeTableById(id);
+		HashMap<String, Object> ht = new HashMap<String, Object>();
+		if (t == null)
+			return new ResponseEntity<>(new ApiResponse("Invalid TimeTable ID !!!!!!!!!!!!!!!!"), HttpStatus.NOT_FOUND);
+		ht.put("status", new String("success"));
+		ht.put("data", t);
+		return ResponseEntity.ok(ht);
+	}
+
+	@PutMapping("/edittimetable/{id}")
+	public ResponseEntity<?> updateTimeTableDetails(@RequestBody TimeTable detachedTimeTable, @PathVariable Long id) {
+
+		System.out.println("in update TimeTable" + detachedTimeTable.getId());
+		try {
+			return ResponseEntity.ok(facultyService.updateTimeTableDetails(detachedTimeTable, id));
+		} catch (RuntimeException e) {
+			System.out.println("err in update  TimeTable " + e);
+			return new ResponseEntity<>(new ApiResponse(e.getMessage()), HttpStatus.NOT_FOUND);
+		}
+	}
+
 }

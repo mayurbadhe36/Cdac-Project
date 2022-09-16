@@ -2,9 +2,11 @@ import React from 'react'
 //import Faculty from '../StudentPages/ViewFaculty'
 import FacultyNavBar from './FacultyNavBar'
 import { useEffect ,useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 function ViewTimeTable() {
   const [data, setData] = useState({timetables: [], isFetching: false});
+  const navigate = useNavigate();
     useEffect(() => {
       const fetchtimetables= async () => {
           try {
@@ -20,6 +22,18 @@ function ViewTimeTable() {
       };
       fetchtimetables();
   }, []);
+  const removeTimeTable =(id) => {
+    axios.delete(`http://localhost:8080/faculty/viewtimetable/delete/${id}`).then((response) => {
+      alert("TimeTable record with Id " + id + " deleted!");
+  
+      navigate('/faculty/viewtimetable')
+      navigate('/faculty/viewnoticeboard')
+    }).catch(error => {
+      alert("Error Ocurred in remove TimeTable :" + error);
+    });
+  
+  }
+
   return(
     <div> <FacultyNavBar/>
     <div className='cotainer-fluid'>
@@ -30,7 +44,6 @@ function ViewTimeTable() {
               <thead className='table-dark'>
                   <tr>
                       <th>Sr No.</th>
-                      <th>Fuculty Name</th>
                       <th>Date</th>
                       <th>Start Time</th>
                       <th>End Time</th>
@@ -41,18 +54,14 @@ function ViewTimeTable() {
                   </tr>
               </thead>
               <tbody>
-              
-             {data.timetables.map(({id,facultyName,date,startTime,endTime,moduleName,platform,link})=>
+             {data.timetables.map(({id,date,startTime,endTime,moduleName,platform,link})=>
              <tr>
               <td>
                 {id}
               </td>
-              <td>
-                {facultyName}
-              </td>
-              <td>
+                <td>
                 {date}
-              </td>
+                </td>
               <td>
                 {startTime}
               </td>
@@ -69,14 +78,10 @@ function ViewTimeTable() {
                 {link}
               </td>
               <td>
-                    <button>
-                       Edit
-                    </button>
-                
-                    <button>
-                       Delete
-                    </button>
-                  </td>
+              <button className="button muted-button" onClick={()=>navigate(`/faculty/edittimetable/${id}`)}>Edit</button>
+              {/* <button className="button muted-button" onClick={() => removeFaculty({id})}>Delete</button> */}
+              <button className="button muted-button" onClick={() => removeTimeTable(id)}>Delete</button>
+            </td>
              </tr>
              )}
             

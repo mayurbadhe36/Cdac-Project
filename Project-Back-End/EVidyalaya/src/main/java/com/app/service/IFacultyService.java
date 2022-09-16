@@ -34,6 +34,18 @@ public interface IFacultyService {
 
 	public TimeTable addTimeTable(@Valid TimeTable timetable, Long facultyId);
 
+	public String deleteNoticeBoardById(Long id);
+
+	public NoticeBoard getNoticeBoardById(Long id);
+
+	public NoticeBoard updateNoticeBoardDetails(NoticeBoard detachedNoticeBoard, Long id);
+
+	public String deleteTimeTableById(Long id);
+
+	public TimeTable getTimeTableById(Long id);
+
+	public TimeTable updateTimeTableDetails(TimeTable detachedTimeTable, Long id);
+
 //	public NoticeBoard getNoticeById(Long id);
 //
 //	public NoticeBoard updateNoticeboard(NoticeBoard notice);
