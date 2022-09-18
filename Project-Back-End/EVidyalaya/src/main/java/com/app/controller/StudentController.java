@@ -75,26 +75,26 @@ public class StudentController {
 		return studentService.getAllFacultyByRoleFaculty();
 	}
 
-	@PostMapping("/uploadAssignment")
-	public ResponseEntity<FileUploadResponse> uploadFile(@RequestParam Long assignId, @RequestParam Long studentId,
-			@RequestParam("file") MultipartFile multipartFile) throws IOException {
-		try {
-			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-			long size = multipartFile.getSize();
-			String filecode = FileUploadUtils.saveFile(fileName, multipartFile);
-			FileUploadResponse response = new FileUploadResponse();
-			response.setFileName(fileName);
-			response.setSize(size);
-			response.setDownloadUri("/downloadFile/" + filecode);
-			// String filelocation = "/downloadFile/" + filecode;
-			studentService.saveAssignmentFile(assignId, studentId, filecode);
-			response.setAssignmentId(assignId);
-			response.setStudentId(studentId);
-			return new ResponseEntity<>(response, HttpStatus.OK);
-		} catch (RuntimeException e) {
-			throw new RuntimeException("Something went wrong");
-		}
-	}
+//	@PostMapping("/uploadAssignment")
+//	public ResponseEntity<FileUploadResponse> uploadFile(@RequestParam Long assignId, @RequestParam Long studentId,
+//			@RequestParam("file") MultipartFile multipartFile) throws IOException {
+//		try {
+//			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+//			long size = multipartFile.getSize();
+//			String filecode = FileUploadUtils.saveFile(fileName, multipartFile);
+//			FileUploadResponse response = new FileUploadResponse();
+//			response.setFileName(fileName);
+//			response.setSize(size);
+//			response.setDownloadUri("/downloadFile/" + filecode);
+//			// String filelocation = "/downloadFile/" + filecode;
+//			studentService.saveAssignmentFile(assignId, studentId, filecode);
+//			response.setAssignmentId(assignId);
+//			response.setStudentId(studentId);
+//			return new ResponseEntity<>(response, HttpStatus.OK);
+//		} catch (RuntimeException e) {
+//			throw new RuntimeException("Something went wrong");
+//		}
+//	}
 
 	@GetMapping("/downloadFile/{fileCode}")
 	public ResponseEntity<?> downloadFile(@PathVariable("fileCode") String fileCode) {
@@ -117,4 +117,26 @@ public class StudentController {
 		return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType))
 				.header(HttpHeaders.CONTENT_DISPOSITION, headerValue).body(resource);
 	}
+
+	@PostMapping("/uploadAssignment/{assignId}")
+	public ResponseEntity<FileUploadResponse> uploadAssignmentAnswer(@PathVariable Long assignId,
+			@RequestParam Long studentId, @RequestParam("file") MultipartFile multipartFile) throws IOException {
+		try {
+			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+			long size = multipartFile.getSize();
+			String filecode = FileUploadUtils.saveFile(fileName, multipartFile);
+			FileUploadResponse response = new FileUploadResponse();
+			response.setFileName(fileName);
+			response.setSize(size);
+			response.setDownloadUri("/downloadFile/" + filecode);
+			// String filelocation = "/downloadFile/" + filecode;
+			studentService.saveAssignmentAnswerFile(assignId, studentId, filecode);
+			response.setAssignmentId(assignId);
+			response.setStudentId(studentId);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} catch (RuntimeException e) {
+			throw new RuntimeException("Something went wrong");
+		}
+	}
+
 }

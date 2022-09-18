@@ -56,7 +56,7 @@ return (
 <Route exact path="/faculty/viewstudent" element={<ViewStudent/>}/>
 <Route exact path="/faculty/addassignment" element={<UploadAssignment/>}/>
 <Route exact path="/faculty/viewassignment" element={<ViewAssignment/>}/>
-<Route exact path="/faculty/viewassignmentanswer" element={<AssignmentAnswer/>}/>
+<Route path="/faculty/viewassignmentanswer" element={<AssignmentAnswer/>}/>
 <Route  path="/faculty/editnoticeboard/:id" element={<EditNoticeBoard/>}/>
 <Route  path="/faculty/edittimetable/:id" element={<EditTimeTable/>}/>
 <Route exact path="/faculty/viewtimetable" element={<ViewTimeTable/>}/>

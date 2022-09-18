@@ -46,6 +46,8 @@ public interface IFacultyService {
 
 	public TimeTable updateTimeTableDetails(TimeTable detachedTimeTable, Long id);
 
+	public List<AssignmentAnswer> getAllAssignmentAnswerByFacultyId(Long facultyId);
+
 //	public NoticeBoard getNoticeById(Long id);
 //
 //	public NoticeBoard updateNoticeboard(NoticeBoard notice);

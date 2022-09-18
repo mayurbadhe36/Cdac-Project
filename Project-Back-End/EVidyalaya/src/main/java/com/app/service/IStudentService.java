@@ -24,7 +24,7 @@ public interface IStudentService {
 //
 //	public User updateProfile(User u);
 
-	public AssignmentAnswer saveAssignmentFile(Long assignId, Long studentId, String fileName) throws IOException;
+	public AssignmentAnswer saveAssignmentAnswerFile(Long assignId, Long studentId, String fileName) throws IOException;
 
 	public List<Assignment> getAllAssignment();
 

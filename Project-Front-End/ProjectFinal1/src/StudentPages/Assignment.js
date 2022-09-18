@@ -1,12 +1,24 @@
 import StudentNavBar from "./StudentNavBar"
 import { useEffect ,useState} from 'react';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 function Assignment() {
   const [searchText, setSearchText] = useState('')
-
+  const [selectedFile, setSelectedFile] = useState();
+  const[assignId,setAssignId]=useState('')
+  const navigate = useNavigate();
   const handleSearchText = (e) => {
     setSearchText(e.target.value)
     console.log(searchText);
+}
+
+const handleFile =function(e,id){
+  let file=e.target.files[0];
+ // console.log(id);
+  setAssignId(id);
+  //console.log(file);
+  setSelectedFile(e.target.files[0]);
+  //console.log(selectedFile);
 }
 
  function handleDownload(file){
@@ -26,6 +38,29 @@ axios ({
 )
 }
 
+const submitForm = (e) => {
+      const formData = new FormData();
+      e.disabled = true;
+      formData.append("file",selectedFile);
+      formData.append("assignId",assignId);
+      formData.append("studentId",sessionStorage.getItem('userId'));
+ //     console.log(assignId);
+      console.log(sessionStorage.getItem('userId'));
+
+      const config = {
+         headers: {
+           'content-type': 'multipart/form-data',
+         },
+       };
+      axios
+        .post(`http://localhost:8080/student/uploadAssignment/${assignId}`, formData,config)
+        .then((res) => {
+          alert("File Upload success");
+        })
+        .catch((err) => alert("File Upload Error"));
+        console.log(formData);
+        
+    };
   const [data, setData] = useState({assignments: [], isFetching: false});
 
     useEffect(() => {
@@ -85,11 +120,17 @@ axios ({
               <td>{facultyName}</td>
              <td>{moduleName}</td>
              <td>{description}</td>
-             
-             <td><button className="btn btn-primary"  onClick={()=>handleDownload(fileName)}>Download {fileName}</button></td>
-             <td><button className="btn btn-primary">Upload</button></td>
+             <td><button className="btn btn-primary"  onClick={()=>handleDownload(fileName)}>Download</button></td>
+             <div className="field">
+                                 <label>Upload File</label><br></br>
+                                     <input type="file"
+       name="file" onChange={(e)=>handleFile(e,id)}
+        /></div>
+        <button className="btn btn-info" onClick={(e)=>submitForm(e)}>Upload</button>
+
              <td>{grade}</td>
-             </tr>  )}
+
+             </tr> )}
                  </tbody>
 
               </table>

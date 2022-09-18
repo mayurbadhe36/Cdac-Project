@@ -113,7 +113,8 @@ public class StudentServiceImpl implements IStudentService {
 	}
 
 	@Override
-	public AssignmentAnswer saveAssignmentFile(Long assignId, Long studentId, String fileName) throws IOException {
+	public AssignmentAnswer saveAssignmentAnswerFile(Long assignId, Long studentId, String fileName)
+			throws IOException {
 
 		User student = userRepo.findById(studentId)
 				.orElseThrow(() -> new ResourceNotFoundException("Invalid Student ID : Can't save file!!!!!!!"));
@@ -125,6 +126,7 @@ public class StudentServiceImpl implements IStudentService {
 				.orElseThrow(() -> new ResourceNotFoundException("Invalid Faculty ID : Can't save file!!!!!!!"));
 
 		AssignmentAnswer aa = new AssignmentAnswer();
+		aa.setAssignmentId(assignment);
 		aa.setStudent(student);
 		aa.setFileName(fileName);
 		aa.setFaculty(faculty);

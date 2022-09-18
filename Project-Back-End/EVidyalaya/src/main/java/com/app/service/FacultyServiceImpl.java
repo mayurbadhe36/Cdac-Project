@@ -1,5 +1,6 @@
 package com.app.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -9,10 +10,12 @@ import org.springframework.stereotype.Service;
 
 import com.app.custom_exceptions.ResourceNotFoundException;
 import com.app.entities.Assignment;
+import com.app.entities.AssignmentAnswer;
 import com.app.entities.NoticeBoard;
 import com.app.entities.Role;
 import com.app.entities.TimeTable;
 import com.app.entities.User;
+import com.app.repository.IAssignmentAnswerRepository;
 import com.app.repository.IAssignmentRepository;
 import com.app.repository.INoticeboardRepository;
 import com.app.repository.ITimetableRepository;
@@ -30,14 +33,14 @@ public class FacultyServiceImpl implements IFacultyService {
 	@Autowired
 	private IUserRepository userRepo;
 
-//	@Autowired
-//	private IAssignmentAnswerRepository answerRepo;
+	@Autowired
+	private IAssignmentAnswerRepository answerRepo;
 
 	@Autowired
 	private ITimetableRepository timetableRepo;
 
 	@Override
-	public Assignment addAssignment(Assignment assignment, Long facultyId,String filecode) {
+	public Assignment addAssignment(Assignment assignment, Long facultyId, String filecode) {
 		User u = userRepo.findById(facultyId)
 				.orElseThrow(() -> new ResourceNotFoundException("Invalid Faculty ID !!!!!!!"));
 		assignment.setFaculty(u);
@@ -275,6 +278,17 @@ public class FacultyServiceImpl implements IFacultyService {
 		timetableRepo.save(timetable);
 		return timetable;
 
+	}
+
+	@Override
+	public List<AssignmentAnswer> getAllAssignmentAnswerByFacultyId(Long facultyId) {
+
+		User u = userRepo.findById(facultyId)
+				.orElseThrow(() -> new ResourceNotFoundException("Invalid TimeTable ID !!!!!!!"));
+		
+		List<AssignmentAnswer> aa = answerRepo.findByFaculty(u);
+
+		return aa;
 	}
 
 }

@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.app.dto.ApiResponse;
 import com.app.entities.Assignment;
+import com.app.entities.AssignmentAnswer;
 import com.app.entities.NoticeBoard;
 import com.app.entities.TimeTable;
 import com.app.entities.User;
@@ -92,21 +93,13 @@ public class FacultyController {
 				.header(HttpHeaders.CONTENT_DISPOSITION, headerValue).body(resource);
 	}
 
-//	@PostMapping("/addassignment/{facultyId}")
-//	public ResponseEntity<?> addAssignment(@RequestBody @Valid Assignment assignment, @PathVariable Long facultyId) {
-//		try {
-//			return new ResponseEntity<>(facultyService.addAssignment(assignment, facultyId), HttpStatus.CREATED);
-//		} catch (RuntimeException e) {
-//			return new ResponseEntity<>(new ApiResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
-//		}
-//	}
-
 	@PostMapping("/addassignment")
-	public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile multipartFile,@RequestParam Long facultyId,@RequestParam String description,@RequestParam String facultyName,@RequestParam String moduleName)
+	public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile multipartFile, @RequestParam Long facultyId,
+			@RequestParam String description, @RequestParam String facultyName, @RequestParam String moduleName)
 			throws IOException {
 		try {
-			System.out.println("Faculty Id "+facultyId);
-			Assignment a= new Assignment();
+			System.out.println("Faculty Id " + facultyId);
+			Assignment a = new Assignment();
 			a.setDescription(description);
 			a.setFacultyName(facultyName);
 			a.setModuleName(moduleName);
@@ -118,12 +111,12 @@ public class FacultyController {
 			response.setSize(size);
 			response.setDownloadUri("/downloadFile/" + filecode);
 			response.setFilecode(filecode);
-			return new ResponseEntity<>(facultyService.addAssignment(a, facultyId,filecode), HttpStatus.CREATED);
+			return new ResponseEntity<>(facultyService.addAssignment(a, facultyId, filecode), HttpStatus.CREATED);
 		} catch (RuntimeException e) {
 			return new ResponseEntity<>(new ApiResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@GetMapping("/viewnoticeboard/{facultyId}")
 	public List<NoticeBoard> getAllNotice(@PathVariable Long facultyId) {
 		System.out.println(facultyId);
@@ -225,6 +218,13 @@ public class FacultyController {
 			System.out.println("err in update  TimeTable " + e);
 			return new ResponseEntity<>(new ApiResponse(e.getMessage()), HttpStatus.NOT_FOUND);
 		}
+	}
+
+	@GetMapping("/viewassignmentanswer/{facultyId}")
+	public List<AssignmentAnswer> getAllAssignmentAnswer(@PathVariable Long facultyId) {
+
+		List<AssignmentAnswer> assignAnswer = facultyService.getAllAssignmentAnswerByFacultyId(facultyId);
+		return assignAnswer;
 	}
 
 }

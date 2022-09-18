@@ -9,7 +9,7 @@ const CarouselContainer = () => {
     <Carousel fade={true} pause={false}>
       <Carousel.Item interval={3000}>
         <img
-          className="d-block w-100"
+          className="d-block w-100" style={{height:"550px"}}
           src="/image/image1.jpg"
           alt="First slide"
         />
@@ -20,7 +20,7 @@ const CarouselContainer = () => {
       
       <Carousel.Item interval={2000}>
         <img
-          className="d-block w-100"
+          className="d-block w-100"style={{height:"550px"}}
           src="/image/ban1.jpg"
         />
         <Carousel.Caption>
@@ -29,7 +29,7 @@ const CarouselContainer = () => {
       </Carousel.Item>
       <Carousel.Item interval={2000}>
         <img
-          className="d-block w-100"
+          className="d-block w-100"style={{height:"550px"}}
           src="/image/image2.jpg"
           alt="Third slide"
         />
@@ -39,7 +39,7 @@ const CarouselContainer = () => {
       </Carousel.Item>
       <Carousel.Item interval={2000}>
         <img
-          className="d-block w-100"
+          className="d-block w-100"style={{height:"550px"}}
           src="/image/C1.jpg"
           alt="Fourth slide"
         />
@@ -49,7 +49,7 @@ const CarouselContainer = () => {
       </Carousel.Item>
       <Carousel.Item interval={2000}>
         <img
-          className="d-block w-100"
+          className="d-block w-100"style={{height:"550px"}}
           src="/image/image3.jpg"
           alt="Fifth slide"
         />
@@ -59,7 +59,7 @@ const CarouselContainer = () => {
       </Carousel.Item>
       <Carousel.Item interval={2000}>
         <img
-          className="d-block w-100"
+          className="d-block w-100"style={{height:"550px"}}
           src="/image/image4.jpg"
           alt="Sixth slide"
         />
@@ -68,7 +68,7 @@ const CarouselContainer = () => {
       </Carousel.Item>
       <Carousel.Item interval={2000}>
         <img
-          className="d-block w-100"
+          className="d-block w-100"style={{height:"550px"}}
           src="/image/image5.jpg"
           alt="First slide"
         />
@@ -78,7 +78,7 @@ const CarouselContainer = () => {
       </Carousel.Item>
       <Carousel.Item interval={2000}>
         <img
-          className="d-block w-100"
+          className="d-block w-100"style={{height:"550px"}}
           src="/image/image6.jpg"
           alt="Eighth slide"
         />

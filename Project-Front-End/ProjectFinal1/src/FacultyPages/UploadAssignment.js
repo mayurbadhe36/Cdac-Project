@@ -6,21 +6,24 @@ function UploadAssignment() {
    const [facultyName,setFacultyName] = useState('')
    const [moduleName,setModuleName] = useState('')
    const [description, setDescription] = useState('')
-   const [selectedFile, setSelectedFile] = useState(null);
+   const [selectedFile, setSelectedFile] = useState();
+
+const handleFile =function(e){
+  let file=e.target.files[0];
+  console.log(file);
+  setSelectedFile(e.target.files[0]);
+  console.log(selectedFile);
+}
 
    const submitForm = (e) => {
       const formData = new FormData();
-      formData.append("facultyName",facultyName);
-      console.log(facultyName);
-      console.log(formData.get('facultyName'))
-      formData.append("facultyId",sessionStorage.getItem('userId'))
       formData.append("file",selectedFile);
+      formData.append("facultyName",facultyName);
+      formData.append("facultyId",sessionStorage.getItem('userId'));
       formData.append("moduleName",moduleName);
       formData.append("description",description);
-     // console.log(selectedFile)
-     // console.log(formData.getItem('file'))
-      console.log(description);
-      console.log(formData);
+      console.log(sessionStorage.getItem('userId'));
+
       const config = {
          headers: {
            'content-type': 'multipart/form-data',
@@ -68,10 +71,9 @@ function UploadAssignment() {
                                  <label>Upload File</label><br></br>
                                      <input
           type="file"
-          value={selectedFile} name="file"
-          onChange={(e) => setSelectedFile(e.target.value.file)}
+       name="file"
+          onChange={(e)=>handleFile(e)}
         />
-
                                  </div>
                                     <div className="mb-3 py-3" style={{textAlign:"center"}}>
                                            <button className="btn btn-primary form-control" onClick={submitForm}>Upload</button>
