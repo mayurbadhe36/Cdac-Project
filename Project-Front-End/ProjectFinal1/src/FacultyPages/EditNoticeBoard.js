@@ -3,6 +3,8 @@ import FacultyNavBar from './FacultyNavBar';
 import {useParams, useNavigate} from "react-router-dom";
 import { useEffect,useState } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function EditNoticeBoard() {
   const navigate = useNavigate();
@@ -48,11 +50,33 @@ const noticeId =param.id;
          }).then(res=>
              console.log(res.data)
             )
-            alert("Noticeboard With Id "+noticeId+" Updated Succesfully")
-            navigate("/faculty/viewnoticeboard")
+            //alert("Noticeboard With Id "+noticeId+" Updated Succesfully")
+
+            toast.success('noticeboard edited Succesfully', {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              });
+          //  navigate("/faculty/viewnoticeboard")
     }
   return (<diV>
              <FacultyNavBar/>
+        <ToastContainer
+position="top-center"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+/>
+
         <div className='cotainer-fluid'>
        <div className="row justify-content-around align-items-center" style={{height :"98vh" , marginTop:0}}>
        <div className="col-4 p-5 shadow bg-white">

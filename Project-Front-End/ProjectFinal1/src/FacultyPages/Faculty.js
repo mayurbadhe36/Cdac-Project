@@ -72,7 +72,7 @@ function Faculty
             <div className="card text-bg-success mb-3" style={{maxWidth: '18rem'}}>
   {/* <div className="card-header">Assignment</div> */}
   <div className="card-body">
-  <NavLink to="/faculty/uploadAssignment"  style={{ textDecoration: 'none' }}><h5 className="card-title p-4 text-white">Upload Assignment</h5> </NavLink>
+  <NavLink to="/faculty/addassignment" style={{ textDecoration: 'none' }}><h5 className="card-title p-4 text-white">Upload Assignment</h5> </NavLink>
     {/* <h5 className="card-title p-5">Assignment</h5> */}
     {/* <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> */}
   </div>

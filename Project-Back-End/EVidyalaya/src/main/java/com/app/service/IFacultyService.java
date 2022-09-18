@@ -14,7 +14,7 @@ import com.app.entities.User;
 
 public interface IFacultyService {
 
-	public Assignment addAssignment(Assignment assignment, Long facultyId);
+	public Assignment addAssignment(Assignment assignment, Long facultyId,String filecode);
 
 	public List<Assignment> getAllAssignment();
 

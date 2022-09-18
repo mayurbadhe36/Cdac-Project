@@ -7,7 +7,12 @@ import axios from 'axios';
 function TimeTable() {
 
   const [data, setData] = useState({timetables: [], isFetching: false});
+  const [searchText, setSearchText] = useState('')
 
+  const handleSearchText = (e) => {
+    setSearchText(e.target.value)
+    console.log(searchText);
+}
     useEffect(() => {
       const fetchtimetables= async () => {
           try {
@@ -32,6 +37,11 @@ function TimeTable() {
        <div className="row justify-content-around align-items-center" style={{height :"98vh" , marginTop:0}}>
        <div className="col-8 p-5 shadow bg-white">
            <center><span><h1>View TimeTable Details</h1></span></center>
+           <div className='ui icon input'>
+              <input type='text' placeholder='Enter faculty name or module name' className='prompt' name="searchText" onChange={handleSearchText} value= {searchText}></input>
+              <button ><i class="bi bi-search"></i></button>
+            </div>
+            <br></br>
            <table className="table table-striped table-secondary">
                  <thead className='table-dark'>
                   <tr>
@@ -47,7 +57,16 @@ function TimeTable() {
                      </thead>
                  <tbody>
 
-               {data.timetables.map(({id,facultyName,date,startTime,endTime,moduleName,platform,link})=>
+                 {
+             data.timetables.filter((val)=>{
+              if(searchText==""){
+                return val
+              }else if(val.moduleName.toLowerCase().includes(searchText.toLowerCase()) || val.facultyName.toLowerCase().includes(searchText.toLowerCase())){
+              return val
+            }
+             })
+               
+               .map(({id,facultyName,date,startTime,endTime,moduleName,platform,link})=>
              <tr>
               <td>{id}</td>
               <td>{facultyName}</td>
@@ -56,7 +75,7 @@ function TimeTable() {
              <td>{endTime}</td>
              <td>{moduleName}</td>
              <td>{platform}</td>
-            <td>{link}</td>
+            <td><a href='#'>{link}</a></td>
              </tr>  )}
               
                  </tbody>

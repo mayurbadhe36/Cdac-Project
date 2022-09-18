@@ -2,7 +2,14 @@ import React from 'react'
 import FacultyNavBar from './FacultyNavBar'
 import { useEffect ,useState} from 'react';
 import axios from 'axios';
+
 function ViewStudent() {
+  const [searchText, setSearchText] = useState('')
+
+  const handleSearchText = (e) => {
+    setSearchText(e.target.value)
+    console.log(searchText);
+}
 
   const [data, setData] = useState({students: [], isFetching: false});
     useEffect(() => {
@@ -20,6 +27,7 @@ function ViewStudent() {
       };
       fetchstudents();
   }, []);
+
   return (
     <div>
     <FacultyNavBar/>
@@ -28,6 +36,13 @@ function ViewStudent() {
     <div className="row justify-content-around align-items-center" style={{height :"98vh" , marginTop:0}}>
     <div className="col-8 p-5 shadow bg-white">
         <center><span><h1>View Student Details</h1></span></center>
+          <div className='ui search'>
+            <div className='ui icon input'>
+              <input type='text' placeholder='Enter name or gmail' className='prompt' name="searchText" onChange={handleSearchText} value= {searchText}></input>
+              <button ><i class="bi bi-search"></i></button>
+            </div>
+            <br></br>
+          </div>
         <div className='contain-table'>
             <table className='table table-striped table-secondary'>
                 <thead className='table-dark'>
@@ -41,7 +56,15 @@ function ViewStudent() {
                     </tr>
                 </thead>
                 <tbody>
-             {data.students.map(({id,name,dob,mobNo,email,address})=>
+             {
+             data.students.filter((val)=>{
+              if(searchText==""){
+                return val
+              }else if(val.name.toLowerCase().includes(searchText.toLowerCase()) ||val.email.toLowerCase().includes(searchText.toLowerCase())){
+              return val
+            }
+             })
+             .map(({id,name,dob,mobNo,email,address})=>
              <tr>
               <td>{id}</td>
               <td>{name}</td>

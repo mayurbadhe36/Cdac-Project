@@ -37,10 +37,11 @@ public class FacultyServiceImpl implements IFacultyService {
 	private ITimetableRepository timetableRepo;
 
 	@Override
-	public Assignment addAssignment(Assignment assignment, Long facultyId) {
+	public Assignment addAssignment(Assignment assignment, Long facultyId,String filecode) {
 		User u = userRepo.findById(facultyId)
 				.orElseThrow(() -> new ResourceNotFoundException("Invalid Faculty ID !!!!!!!"));
 		assignment.setFaculty(u);
+		assignment.setFileName(filecode);
 		return assignRepo.save(assignment);
 	}
 

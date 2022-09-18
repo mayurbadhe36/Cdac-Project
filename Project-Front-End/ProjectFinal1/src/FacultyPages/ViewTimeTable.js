@@ -6,6 +6,12 @@ import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 function ViewTimeTable() {
   const [data, setData] = useState({timetables: [], isFetching: false});
+  const [searchText, setSearchText] = useState('')
+
+  const handleSearchText = (e) => {
+    setSearchText(e.target.value)
+    console.log(searchText);
+}
   const navigate = useNavigate();
     useEffect(() => {
       const fetchtimetables= async () => {
@@ -40,6 +46,12 @@ function ViewTimeTable() {
     <div className="row justify-content-around align-items-center" style={{height :"98vh" , marginTop:0}}>
     <div className="col-8 p-5 shadow bg-white">
         <center><span><h1>View TimeTable Details</h1></span></center>
+        <div className='ui icon input'>
+              <input type='text' placeholder='Enter Module Name' className='prompt' name="searchText" onChange={handleSearchText} value= {searchText}></input>
+              <button ><i class="bi bi-search"></i></button>
+            </div>
+            <br></br>
+            <br></br>
         <table className="table table-striped table-secondary">
               <thead className='table-dark'>
                   <tr>
@@ -54,7 +66,15 @@ function ViewTimeTable() {
                   </tr>
               </thead>
               <tbody>
-             {data.timetables.map(({id,date,startTime,endTime,moduleName,platform,link})=>
+              {
+             data.timetables.filter((val)=>{
+              if(searchText==""){
+                return val
+              }else if(val.moduleName.toLowerCase().includes(searchText.toLowerCase())){
+              return val
+            }
+             })
+             .map(({id,date,startTime,endTime,moduleName,platform,link})=>
              <tr>
               <td>
                 {id}

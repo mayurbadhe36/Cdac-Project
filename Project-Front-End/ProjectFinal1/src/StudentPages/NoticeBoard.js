@@ -4,7 +4,12 @@ import { useEffect ,useState} from 'react';
 import axios from 'axios';
 function NoticeBoard() {
    const [data, setData] = useState({noticeboards: [], isFetching: false});
+   const [searchText, setSearchText] = useState('')
 
+   const handleSearchText = (e) => {
+     setSearchText(e.target.value)
+     console.log(searchText);
+ }
     useEffect(() => {
       const fetchnoticeboards= async () => {
           try {
@@ -28,7 +33,20 @@ function NoticeBoard() {
     
     <div className="col-8 p-5 shadow" style={{backgroundColor : 'white'}}>
     <center><span><h1>View NoticeBoard</h1></span></center>
-             {data.noticeboards.map(({description,date,facultyName,moduleName})=>
+    <div className='ui icon input'>
+              <input type='text' placeholder='Enter faculty name or module name' className='prompt' name="searchText" onChange={handleSearchText} value= {searchText}></input>
+              <button ><i class="bi bi-search"></i></button>
+            </div>
+            <br></br>
+            {
+             data.noticeboards.filter((val)=>{
+              if(searchText==""){
+                return val
+              }else if(val.moduleName.toLowerCase().includes(searchText.toLowerCase()) || val.facultyName.toLowerCase().includes(searchText.toLowerCase())){
+              return val
+            }
+             })
+            .map(({description,date,facultyName,moduleName})=>
              <table className="table border table-striped table-secondary" style={{cellspacing:'5'}}>
                <tr>
                   <td>

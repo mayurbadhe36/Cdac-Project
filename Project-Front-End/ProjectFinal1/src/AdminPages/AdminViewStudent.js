@@ -6,6 +6,12 @@ import axios from 'axios';
 
 function AdminViewStudent() {
   const [data, setData] = useState({students: [], isFetching: false});
+  const [searchText, setSearchText] = useState('')
+
+  const handleSearchText = (e) => {
+    setSearchText(e.target.value)
+    console.log(searchText);
+}
   const navigate = useNavigate();
   useEffect(() => {
     const fetchstudents= async () => {
@@ -43,6 +49,14 @@ function AdminViewStudent() {
        <div className="row justify-content-around align-items-center" style={{height :"98vh" , marginTop:0}}>
        <div className="col-8 p-5 shadow bg-white">
            <center><span><h1>View Student Details </h1></span></center>
+           <div className='ui search'>
+            <div className='ui icon input'>
+            <button><i class="bi bi-search"></i></button>
+              <input type='text' placeholder='Enter name or gmail' className='prompt' name="searchText" onChange={handleSearchText} value= {searchText}></input>
+              
+            </div>
+            <br></br>
+          </div>
            <table className="table table-striped table-secondary">
                  <thead className='table-dark'>
                    <tr>
@@ -57,7 +71,15 @@ function AdminViewStudent() {
         </thead>
         <tbody>
          
-        {data.students.map(({id,name,dob,mobNo,email,address})=>
+        {
+             data.students.filter((val)=>{
+              if(searchText==""){
+                return val
+              }else if(val.name.toLowerCase().includes(searchText.toLowerCase()) ||val.email.toLowerCase().includes(searchText.toLowerCase())){
+              return val
+            }
+             })
+        .map(({id,name,dob,mobNo,email,address})=>
              <tr>
               <td>
                 {id}

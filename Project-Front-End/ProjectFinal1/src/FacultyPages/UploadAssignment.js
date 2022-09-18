@@ -1,34 +1,39 @@
-import React from 'react'
+import React, { useState } from 'react'
 import FacultyNavBar from './FacultyNavBar'
 import axios from 'axios';
+
 function UploadAssignment() {
+   const [facultyName,setFacultyName] = useState('')
+   const [moduleName,setModuleName] = useState('')
+   const [description, setDescription] = useState('')
+   const [selectedFile, setSelectedFile] = useState(null);
 
-   // const handleUploadFirst=function(){
-   //        url="http://localhost:8080/faculty/uploadAssignment";
-   //       axios.post(url,{
-             
-   //       }).then(res=>
-   //           console.log(res.data)
-   //           )
-   //   }
-   // }
-
-   const handleUpload=function(){
-   axios({
-      method: 'post',
-      url:'http://localhost:8080/faculty/uploadAssignment',
-      body:document.getElementById("file"),
-      headers:{'Content-Type': 'multipart/form-data' }
-      })
-      .then(function (response) {
-        
-          console.log(response);
-      })
-      .catch(function (response) {
-          //handle error
-          console.log(response);
-      });
-   }
+   const submitForm = (e) => {
+      const formData = new FormData();
+      formData.append("facultyName",facultyName);
+      console.log(facultyName);
+      console.log(formData.get('facultyName'))
+      formData.append("facultyId",sessionStorage.getItem('userId'))
+      formData.append("file",selectedFile);
+      formData.append("moduleName",moduleName);
+      formData.append("description",description);
+     // console.log(selectedFile)
+     // console.log(formData.getItem('file'))
+      console.log(description);
+      console.log(formData);
+      const config = {
+         headers: {
+           'content-type': 'multipart/form-data',
+         },
+       };
+      axios
+        .post("http://localhost:8080/faculty/addassignment", formData,config)
+        .then((res) => {
+          alert("File Upload success");
+        })
+        .catch((err) => alert("File Upload Error"));
+        console.log(formData);
+    };
 
   return (
     <div>
@@ -36,39 +41,43 @@ function UploadAssignment() {
         <div className="container-fluid">
               <div className="row justify-content-around align-items-center" style={{height :"98vh" , marginTop:-35}}>
                       <div className="col-4 p-3 shadow bg-white">
-                         <form>
+                         <form id='assignment'>
                             <span className="head fs-3"><center>Upload Assignment</center></span>
                                 <div className="ui form">
                                         <div className="field">
                                             <label>Faculty Name</label>
                                             <div className="mb-3">
-                                            <input type="text" name="fname" className="form-control" placeholder="Enter Faculty Name" />
+                                            <input type="text" name="facultyName" className="form-control" placeholder="Enter Faculty Name"value={facultyName}
+          onChange={(e) => setFacultyName(e.target.value)} />
                                     </div>
                                  </div>
                                  <div className="field">
-                                     <label>Subject Name</label>
+                                     <label>Module Name</label>
                                         <div className="mb-3">
-                                           <input type="text" name="subname" className="form-control" placeholder="Enter Subject" />
+                                           <input type="text" name="moduleName" className="form-control" placeholder="Enter Subject"value={moduleName}
+          onChange={(e) => setModuleName(e.target.value)} />
                                         </div>
                                  </div>
                                  <div className='mb-3'>
                                  <label>Description</label><br></br>
-                                 <textarea className='col-100  form-control' id='text' > </textarea>
+                                 <textarea className='col-100  form-control' value={description}
+          onChange={(e) => setDescription(e.target.value)}></textarea>
                               </div>
 
                                  <div className="field">
-                                     <label>Upload File</label>
-                                        <div className="mb-3">
-                                          <input type="file" onChange={handleUpload}/>
-                                        </div>
+                                 <label>Upload File</label><br></br>
+                                     <input
+          type="file"
+          value={selectedFile} name="file"
+          onChange={(e) => setSelectedFile(e.target.value.file)}
+        />
+
                                  </div>
-                                  
                                     <div className="mb-3 py-3" style={{textAlign:"center"}}>
-                                           <button className="btn btn-primary form-control">Upload</button>
+                                           <button className="btn btn-primary form-control" onClick={submitForm}>Upload</button>
                                     </div>
                             </div>
-                        </form>
-                            	
+                        </form>  	
                       </div>
                      
               </div>

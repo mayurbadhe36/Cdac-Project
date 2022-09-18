@@ -2,6 +2,12 @@ import StudentNavBar from "./StudentNavBar"
 import { useEffect ,useState} from 'react';
 import axios from 'axios';
 function Assignment() {
+  const [searchText, setSearchText] = useState('')
+
+  const handleSearchText = (e) => {
+    setSearchText(e.target.value)
+    console.log(searchText);
+}
 
  function handleDownload(file){
 axios ({
@@ -45,6 +51,11 @@ axios ({
        <div className="col-8 p-5 shadow bg-white">
        
            <center><span><h1>View Assignment</h1></span></center>
+           <div className='ui icon input'>
+              <input type='text' placeholder='Enter faculty name or module name' className='prompt' name="searchText" onChange={handleSearchText} value= {searchText}></input>
+              <button ><i class="bi bi-search"></i></button>
+            </div>
+            <br></br>
            <table className="table table-striped tabel-secondary">
            
                  <thead className='table-dark'>
@@ -58,9 +69,17 @@ axios ({
                  <th>Grade</th>
                  </tr>
                      </thead>
-                    
                  <tbody>
-                 {data.assignments.map(({id,facultyName,moduleName,description,fileName,grade})=>
+                 {
+             data.assignments.filter((val)=>{
+              if(searchText==""){
+                return val
+              }else if(val.moduleName.toLowerCase().includes(searchText.toLowerCase()) || val.facultyName.toLowerCase().includes(searchText.toLowerCase())){
+              return val
+            }
+             })
+                 
+                 .map(({id,facultyName,moduleName,description,fileName,grade})=>
              <tr>
               <td>{id}</td>
               <td>{facultyName}</td>

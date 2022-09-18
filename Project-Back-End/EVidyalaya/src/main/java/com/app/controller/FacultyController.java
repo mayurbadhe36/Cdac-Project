@@ -36,8 +36,8 @@ import com.app.filehandlingutils.FileUploadUtils;
 import com.app.service.IFacultyService;
 
 @RestController
-@RequestMapping("/faculty")
 @CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/faculty")
 public class FacultyController {
 
 	@Autowired
@@ -52,23 +52,23 @@ public class FacultyController {
 		}
 	}
 
-	@PostMapping("/uploadAssignment")
-	public ResponseEntity<FacultyAssignmentUploadResponse> uploadFile(@RequestParam("file") MultipartFile multipartFile)
-			throws IOException {
-		try {
-			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-			long size = multipartFile.getSize();
-			String filecode = FileUploadUtils.saveFile(fileName, multipartFile);
-			FacultyAssignmentUploadResponse response = new FacultyAssignmentUploadResponse();
-			response.setFileName(fileName);
-			response.setSize(size);
-			response.setDownloadUri("/downloadFile/" + filecode);
-			response.setFilecode(filecode);
-			return new ResponseEntity<>(response, HttpStatus.OK);
-		} catch (RuntimeException e) {
-			throw new RuntimeException("Something went wrong");
-		}
-	}
+//	@PostMapping("/uploadAssignment")
+//	public ResponseEntity<FacultyAssignmentUploadResponse> uploadFile(@RequestParam("file") MultipartFile multipartFile)
+//			throws IOException {
+//		try {
+//			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+//			long size = multipartFile.getSize();
+//			String filecode = FileUploadUtils.saveFile(fileName, multipartFile);
+//			FacultyAssignmentUploadResponse response = new FacultyAssignmentUploadResponse();
+//			response.setFileName(fileName);
+//			response.setSize(size);
+//			response.setDownloadUri("/downloadFile/" + filecode);
+//			response.setFilecode(filecode);
+//			return new ResponseEntity<>(response, HttpStatus.OK);
+//		} catch (RuntimeException e) {
+//			throw new RuntimeException("Something went wrong");
+//		}
+//	}
 
 	@GetMapping("/downloadFile/{fileCode}")
 	public ResponseEntity<?> downloadFile(@PathVariable("fileCode") String fileCode) {
@@ -92,15 +92,38 @@ public class FacultyController {
 				.header(HttpHeaders.CONTENT_DISPOSITION, headerValue).body(resource);
 	}
 
-	@PostMapping("/addassignment/{facultyId}")
-	public ResponseEntity<?> addAssignment(@RequestBody @Valid Assignment assignment, @PathVariable Long facultyId) {
+//	@PostMapping("/addassignment/{facultyId}")
+//	public ResponseEntity<?> addAssignment(@RequestBody @Valid Assignment assignment, @PathVariable Long facultyId) {
+//		try {
+//			return new ResponseEntity<>(facultyService.addAssignment(assignment, facultyId), HttpStatus.CREATED);
+//		} catch (RuntimeException e) {
+//			return new ResponseEntity<>(new ApiResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
+//		}
+//	}
+
+	@PostMapping("/addassignment")
+	public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile multipartFile,@RequestParam Long facultyId,@RequestParam String description,@RequestParam String facultyName,@RequestParam String moduleName)
+			throws IOException {
 		try {
-			return new ResponseEntity<>(facultyService.addAssignment(assignment, facultyId), HttpStatus.CREATED);
+			System.out.println("Faculty Id "+facultyId);
+			Assignment a= new Assignment();
+			a.setDescription(description);
+			a.setFacultyName(facultyName);
+			a.setModuleName(moduleName);
+			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+			long size = multipartFile.getSize();
+			String filecode = FileUploadUtils.saveFile(fileName, multipartFile);
+			FacultyAssignmentUploadResponse response = new FacultyAssignmentUploadResponse();
+			response.setFileName(fileName);
+			response.setSize(size);
+			response.setDownloadUri("/downloadFile/" + filecode);
+			response.setFilecode(filecode);
+			return new ResponseEntity<>(facultyService.addAssignment(a, facultyId,filecode), HttpStatus.CREATED);
 		} catch (RuntimeException e) {
 			return new ResponseEntity<>(new ApiResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
 		}
 	}
-
+	
 	@GetMapping("/viewnoticeboard/{facultyId}")
 	public List<NoticeBoard> getAllNotice(@PathVariable Long facultyId) {
 		System.out.println(facultyId);
