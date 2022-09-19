@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Jaas;
 import org.springframework.stereotype.Service;
 
 import com.app.custom_exceptions.ResourceNotFoundException;
@@ -285,9 +286,27 @@ public class FacultyServiceImpl implements IFacultyService {
 
 		User u = userRepo.findById(facultyId)
 				.orElseThrow(() -> new ResourceNotFoundException("Invalid TimeTable ID !!!!!!!"));
-		
+
 		List<AssignmentAnswer> aa = answerRepo.findByFaculty(u);
 
+		return aa;
+	}
+
+	@Override
+	public AssignmentAnswer updateStudentGradeByAssignmentAnswerId(String grade, Long id) {
+		AssignmentAnswer aa = answerRepo.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Invalid AssignmentAnswer  ID !!!!!!!"));
+		aa.setGrade(grade);
+		answerRepo.save(aa);
+		return aa;
+	}
+
+	@Override
+	public AssignmentAnswer updateStudentRemarkByAssignmentAnswerId(String remark, Long id) {
+		AssignmentAnswer aa = answerRepo.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Invalid AssignmentAnswer  ID !!!!!!!"));
+		aa.setRemark(remark);
+		answerRepo.save(aa);
 		return aa;
 	}
 

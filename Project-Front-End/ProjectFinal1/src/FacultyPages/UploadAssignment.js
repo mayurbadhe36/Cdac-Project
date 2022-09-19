@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import FacultyNavBar from './FacultyNavBar'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function UploadAssignment() {
-   const [facultyName,setFacultyName] = useState('')
    const [moduleName,setModuleName] = useState('')
    const [description, setDescription] = useState('')
    const [selectedFile, setSelectedFile] = useState();
+   const navigate=useNavigate();
 
 const handleFile =function(e){
   let file=e.target.files[0];
@@ -18,7 +19,7 @@ const handleFile =function(e){
    const submitForm = (e) => {
       const formData = new FormData();
       formData.append("file",selectedFile);
-      formData.append("facultyName",facultyName);
+      formData.append("facultyName",sessionStorage.getItem('userName'));
       formData.append("facultyId",sessionStorage.getItem('userId'));
       formData.append("moduleName",moduleName);
       formData.append("description",description);
@@ -32,10 +33,11 @@ const handleFile =function(e){
       axios
         .post("http://localhost:8080/faculty/addassignment", formData,config)
         .then((res) => {
-          alert("File Upload success");
+          alert("Assignment Upload Successfully");
         })
         .catch((err) => alert("File Upload Error"));
         console.log(formData);
+        navigate('/faculty')
     };
 
   return (
@@ -47,13 +49,13 @@ const handleFile =function(e){
                          <form id='assignment'>
                             <span className="head fs-3"><center>Upload Assignment</center></span>
                                 <div className="ui form">
-                                        <div className="field">
+                                        {/* <div className="field">
                                             <label>Faculty Name</label>
                                             <div className="mb-3">
                                             <input type="text" name="facultyName" className="form-control" placeholder="Enter Faculty Name"value={facultyName}
           onChange={(e) => setFacultyName(e.target.value)} />
                                     </div>
-                                 </div>
+                                 </div> */}
                                  <div className="field">
                                      <label>Module Name</label>
                                         <div className="mb-3">

@@ -11,6 +11,8 @@ public interface IAssignmentAnswerRepository extends JpaRepository<AssignmentAns
 
 	List<AssignmentAnswer> findByFaculty(User u);
 
+	List<AssignmentAnswer> findByStudent(User student);
+
 //	public AssignmentAnswer findByStudentAndAssignmentId(long uid, long aid);
 //
 //	public List<AssignmentAnswer> findByFacultyId(Long id);

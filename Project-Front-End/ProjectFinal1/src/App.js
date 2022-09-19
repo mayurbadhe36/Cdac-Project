@@ -29,6 +29,7 @@ import Admin from './AdminPages/Admin';
 import AddFaculty1 from './AdminPages/AddFaculty1';
 import EditNoticeBoard from './FacultyPages/EditNoticeBoard';
 import EditTimeTable from './FacultyPages/EditTimeTable';
+import Result from './StudentPages/Result';
 
 function App() {
 return (
@@ -47,6 +48,7 @@ return (
 <Route exact path="/student/noticeboard" element={<NoticeBoard/>}/>
 <Route exact path="/student/faculty" element={<ViewFaculty/>}/>
 <Route exact path="/student/assignment" element={<Assignment/>}/>
+<Route exact path="/student/result" element={<Result/>}/>
 
 <Route exact path="/faculty" element={<Faculty/>}/>
 <Route exact path="/faculty/addtimetable/" element={<AddTimeTable/>}/>
@@ -68,6 +70,7 @@ return (
 <Route exact path="/admin/viewstudent" element={<AdminViewStudent/>}/>
 <Route  path="/admin/editstudent/:id" element={<EditStudent/>}/>
 <Route path="/admin/editfaculty/:id" element={<EditFaculty/>}/>
+
 </Routes>
 </div>
 );

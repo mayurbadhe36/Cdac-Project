@@ -101,7 +101,6 @@ const submitForm = (e) => {
                  <th>Description</th>
                  <th>Download</th>
                  <th>Upload</th>
-                 <th>Grade</th>
                  </tr>
                      </thead>
                  <tbody>
@@ -113,8 +112,7 @@ const submitForm = (e) => {
               return val
             }
              })
-                 
-                 .map(({id,facultyName,moduleName,description,fileName,grade})=>
+                 .map(({id,facultyName,moduleName,description,fileName})=>
              <tr>
               <td>{id}</td>
               <td>{facultyName}</td>
@@ -127,9 +125,6 @@ const submitForm = (e) => {
        name="file" onChange={(e)=>handleFile(e,id)}
         /></div>
         <button className="btn btn-info" onClick={(e)=>submitForm(e)}>Upload</button>
-
-             <td>{grade}</td>
-
              </tr> )}
                  </tbody>
 

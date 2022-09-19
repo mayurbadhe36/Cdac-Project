@@ -26,7 +26,7 @@ public class AssignmentAnswer extends BaseEntity {
 	private String fileName;
 	@Column(length = 2)
 	private String grade;
-	@Column(length = 10)
+	@Column(length = 50)
 	private String remark;
 	@Column(name = "modulename")
 	private String moduleName;

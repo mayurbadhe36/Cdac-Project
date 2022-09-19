@@ -24,8 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.app.dto.ApiResponse;
+import com.app.dto.AssignmentAnswerDto;
 import com.app.dto.CredentialDto;
 import com.app.entities.Assignment;
+import com.app.entities.AssignmentAnswer;
 import com.app.entities.NoticeBoard;
 import com.app.entities.TimeTable;
 import com.app.entities.User;
@@ -139,4 +141,11 @@ public class StudentController {
 		}
 	}
 
+	@GetMapping("/result/{studentId}")
+	public List<AssignmentAnswer> getAllAssignmentWithStudentId(@PathVariable Long studentId) {
+
+		System.out.println("id" + studentId);
+
+		return studentService.getAllAssignmentByStudentIdWithGrade(studentId);
+	}
 }

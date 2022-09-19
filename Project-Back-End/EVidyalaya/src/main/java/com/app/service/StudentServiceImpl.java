@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.app.custom_exceptions.ResourceNotFoundException;
+import com.app.dto.AssignmentAnswerDto;
 import com.app.entities.Assignment;
 import com.app.entities.AssignmentAnswer;
 import com.app.entities.NoticeBoard;
@@ -92,6 +93,7 @@ public class StudentServiceImpl implements IStudentService {
 
 	@Override
 	public List<Assignment> getAllAssignment() {
+
 		return assignmentRepo.findAll();
 	}
 
@@ -134,5 +136,13 @@ public class StudentServiceImpl implements IStudentService {
 		aa.setStudentName(student.getName());
 		assignRepo.save(aa);
 		return aa;
+	}
+
+	@Override
+	public List<AssignmentAnswer> getAllAssignmentByStudentIdWithGrade(Long studentId) {
+		User student = userRepo.findById(studentId)
+				.orElseThrow(() -> new ResourceNotFoundException("Invalid Student ID!!"));
+
+		return assignRepo.findByStudent(student);
 	}
 }

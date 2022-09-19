@@ -16,6 +16,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.app.dto.ApiResponse;
+import com.app.dto.AssignmentAnswerDto;
 import com.app.entities.Assignment;
 import com.app.entities.AssignmentAnswer;
 import com.app.entities.NoticeBoard;
@@ -227,4 +229,23 @@ public class FacultyController {
 		return assignAnswer;
 	}
 
+	@PatchMapping("/viewassignmentanswer/grade/{id}")
+	public ResponseEntity<?> updateGradeOfStudent(@PathVariable Long id, @RequestBody AssignmentAnswer aas) {
+		System.out.println("id =" + id);
+		try {
+			return ResponseEntity.ok(facultyService.updateStudentGradeByAssignmentAnswerId(aas.getGrade(), id));
+		} catch (RuntimeException e) {
+			return new ResponseEntity<>(new ApiResponse(e.getMessage()), HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@PatchMapping("/viewassignmentanswer/remark/{id}")
+	public ResponseEntity<?> updateRemarkOfStudent(@PathVariable Long id, @RequestBody AssignmentAnswer aas) {
+		System.out.println("id =" + id);
+		try {
+			return ResponseEntity.ok(facultyService.updateStudentRemarkByAssignmentAnswerId(aas.getRemark(), id));
+		} catch (RuntimeException e) {
+			return new ResponseEntity<>(new ApiResponse(e.getMessage()), HttpStatus.NOT_FOUND);
+		}
+	}
 }

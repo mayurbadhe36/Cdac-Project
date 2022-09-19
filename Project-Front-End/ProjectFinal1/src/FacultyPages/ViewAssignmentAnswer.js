@@ -1,12 +1,15 @@
 import React from 'react'
 import FacultyNavBar from './FacultyNavBar'
 import { useEffect ,useState} from 'react';
-//import {useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 function ViewAssignmentAnswer() {
 
   const [data, setData] = useState({answers: [], isFetching: false});
   const [searchText, setSearchText] = useState('')
+  const[remark,setRemark]=useState('');
+  const[grade,setGrade]=useState('');
+  const navigate =useNavigate();
 
   const handleSearchText = (e) => {
     setSearchText(e.target.value)
@@ -46,6 +49,42 @@ function handleDownload(file){
       };
       fetchanswers();
   }, []);
+  
+
+  const getGrade=function(e){
+    setGrade(e.target.value);
+    console.log(grade);
+  }
+
+  
+
+  const getRemark=function(e){
+    setRemark(e.target.value);
+    console.log(remark);
+  }
+
+  const handleGrade=function(id){
+    const gradeUrl=`http://localhost:8080/faculty/viewassignmentanswer/grade/${id}`
+    axios.patch(gradeUrl,{
+        grade:grade
+    }).then(res=>
+        console.log(res.data)
+        )  
+        alert("Grade Added Successfully!!")
+        navigate('/faculty/viewassignmentanswer')
+  }
+  
+  const handleRemark=function(id){
+    const remarkUrl=`http://localhost:8080/faculty/viewassignmentanswer/remark/${id}`
+    axios.patch(remarkUrl,{
+        remark:remark
+    }).then(res=>
+        console.log(res.data)
+        )  
+        alert("Remark Added Successfully!!")
+        navigate('/faculty/viewassignmentanswer')
+  }
+  
    return(
     <div>
       <FacultyNavBar/>
@@ -82,10 +121,16 @@ function handleDownload(file){
           <td>{id}</td>
           <td>{moduleName}</td>
           <td>{studentName}</td>
-          <td><button className="btn btn-primary"  onClick={()=>handleDownload(fileName)}>Download</button></td>
+          <td><button className="btn btn-primary" onClick={()=>handleDownload(fileName)}>Download</button></td>
           <td>
-              <button className="button muted-button">Grade</button>
-              <button className="button muted-button" >Remark</button>        
+            <td>
+              <input type='text' placeholder='enter grade' onChange={(e)=>getGrade(e)}/>
+              <button className="button muted-button" onClick={()=>handleGrade(id)}>Grade</button>
+              </td>
+              <td>
+              <input type='text' placeholder='enter remark' onChange={(e)=>getRemark(e)}/>
+              <button className="button muted-button" onClick={()=>handleRemark(id)}>Remark</button>   
+              </td>     
             </td>
          </tr>)}
              

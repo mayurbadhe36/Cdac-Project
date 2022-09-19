@@ -14,7 +14,7 @@ import com.app.entities.User;
 
 public interface IFacultyService {
 
-	public Assignment addAssignment(Assignment assignment, Long facultyId,String filecode);
+	public Assignment addAssignment(Assignment assignment, Long facultyId, String filecode);
 
 	public List<Assignment> getAllAssignment();
 
@@ -47,6 +47,10 @@ public interface IFacultyService {
 	public TimeTable updateTimeTableDetails(TimeTable detachedTimeTable, Long id);
 
 	public List<AssignmentAnswer> getAllAssignmentAnswerByFacultyId(Long facultyId);
+
+	public AssignmentAnswer updateStudentGradeByAssignmentAnswerId(String grade, Long id);
+
+	public AssignmentAnswer updateStudentRemarkByAssignmentAnswerId(String remark, Long id);
 
 //	public NoticeBoard getNoticeById(Long id);
 //

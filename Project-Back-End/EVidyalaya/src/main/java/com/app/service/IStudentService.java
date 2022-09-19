@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.app.dto.AssignmentAnswerDto;
 import com.app.dto.UserDto;
 import com.app.entities.Assignment;
 import com.app.entities.AssignmentAnswer;
@@ -33,5 +34,7 @@ public interface IStudentService {
 	List<TimeTable> getAllTimeTable();
 
 	List<User> getAllFacultyByRoleFaculty();
+
+	List<AssignmentAnswer> getAllAssignmentByStudentIdWithGrade(Long studentId);
 
 }
